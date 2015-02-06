@@ -1,8 +1,4 @@
-+=======================+
-| Wave.js               |
-+=======================+
-
-# Overview
+# Wave.js
 
 Wave.js is a framework I've been working on for writing simple animations (and potentially visualizers) with the canvas HTML5 tag.
 
