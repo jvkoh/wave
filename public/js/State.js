@@ -1,5 +1,5 @@
 define(['js/Group', 'js/Static'], function(Group, Static) {
-    return function Screens() {
+    return function Sequence() {
         return Group({
             init: function init() {
                 this.current_object = 0;
@@ -25,8 +25,8 @@ define(['js/Group', 'js/Static'], function(Group, Static) {
                 this.checkState();
             },
 
-            setState: function setState(object) {
-                this.current_object = object;
+            setCurrentObject: function setCurrentObject(obj_id) {
+                this.current_object = obj_id;
             }
 
         }, Static.compile(arguments));

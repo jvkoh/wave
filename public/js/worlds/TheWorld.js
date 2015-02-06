@@ -12,6 +12,9 @@ require([
     StarsAndStripes
 ) {
 
+    // Get the canvas
+    var canvas = document.getElementById('canvas');
+
     // All of the possible world states
     var world_states = [
         LineStarWorld,
@@ -62,9 +65,6 @@ require([
 
     }, false);
 
-    console.log(world);
-
-    world.updateWorld();
     world.start();
 
 });

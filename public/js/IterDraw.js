@@ -6,7 +6,7 @@ define(['js/Static', 'js/Group'], function(Static, Group) {
 
                 if (this.objects) {
                     var drawObject = function drawObject(delta, obj) {
-                        obj.draw(delta);
+                        obj.callIf(obj.draw, delta);
                     };
                     this.objects.forEach(drawObject.bind(null, delta));
                 }

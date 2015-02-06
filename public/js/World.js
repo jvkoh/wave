@@ -21,6 +21,7 @@ define(['js/Static', 'js/IterDraw'], function(Static, IterDraw) {
 
                 this.canvas.width = this.width;
                 this.canvas.height = this.height;
+                this.updateWorld();
             },
 
             getTime: function getTime() {
