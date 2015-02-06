@@ -2,11 +2,11 @@
 
 Wave.js is a framework I've been working on for writing simple animations (and potentially visualizers) with the canvas HTML5 tag.
 
+Currently this repo also includes a node/express website (that you can use to run your animations locally), and relies heavily on require.js.
+
 # Basic Example
 
-Right now this is structured as a simple node/express website, but really all you need from this repo is the javascript.  Maybe in the future I'll turn this into a repo of just the javascript needed to make this happen.
-
-Here's a super basic example of a javascript file for a super simple canvas page.  This javascript file assumes that the HTML it's linked to has a canvas element on the page somewhere, with an id of "canvas".
+Here's a super basic example of a javascript file for a super simple canvas page.  This javascript file assumes that the HTML is linked to has a canvas element on the page somewhere, with an id of "canvas".
 
 ```javascript
 require([
@@ -36,18 +36,18 @@ require([
 
 Let's break this down piece by piece.
 
-1) We're requiring Wave.  Wave is basically just a wrapper class for all of the other objects in this library that I've written so far.
-2) We get the canvas element and store a reference to it.
-3) We make a world object.  This is done by calling the Wave.World() function, which returns a world object.  Any properties from any objects that get passed to Wave.World get written onto the returned object, so all of the stuff on the object that we pass in ends up on the returned world object.  Let's look at what we passed in.
-    - canvas: a reference to the canvas element that this world is drawn on
-    - width/height: the width and height of our desired world
-    - objects: an array of objects that we want to draw on our world.  These objects all need to have `draw()` methods.  In this case I've passed a simple square object into the world, which you can read more about later in the readme.
-5) We call `world.start()`, which starts the event loop for the world.  Now let's look at how this stuff works.
+1. We're requiring Wave.  Wave is basically just a wrapper class for all of the other objects in this library that I've written so far.
+2. We get the canvas element and store a reference to it.
+3. We make a world object.  This is done by calling the Wave.World() function, which returns a world object.  Any properties from any objects that get passed to Wave.World get written onto the returned object, so all of the stuff on the object that we pass in ends up on the returned world object.  Let's look at what we passed in.
+    * canvas: a reference to the canvas element that this world is drawn on
+    * width/height: the width and height of our desired world
+    * objects: an array of objects that we want to draw on our world.  These objects all need to have `draw()` methods.  In this case I've passed a simple square object into the world, which you can read more about later in the readme.
+4. We call `world.start()`, which starts the event loop for the world.  Now let's look at how this stuff works.
 
 # How it all works
 
 ## Object Inheritance
-I've written my own little strange version of object inheritance, but it's pretty lightweight and hopefully easy to understand.  The meat of it is two classes: Wave.Base and Wave.Static
+I've written my own little strange version of object inheritance, but it's pretty lightweight and hopefully easy to understand.  It consists of two classes: Wave.Base and Wave.Static.
 
 ### Wave.Static
 This object has two very simple functions, `extend()` and `compile`.
@@ -103,9 +103,9 @@ A Wave.Group object is simply an object that has the property `objects`, that st
 ### Wave.IterDraw
 Wave.IterDraw is an extension of Wave.Group that has a `draw()` function.
 
-`draw()` looks for and calls any `draw()` functions that exist on any of the child objects on this IterDraw.  It will also call any `preDraw()` function it has before it draws its child objects, and any `postDraw()` functions it has after it draws its child objects.
+`draw(delta)` looks for and calls any `draw()` functions that exist on any of the child objects on this IterDraw.  It will also call any `preDraw()` function it has before it draws its child objects, and any `postDraw()` functions it has after it draws its child objects.
 
-`draw()`, `preDraw()`, and `postDraw()` have an argument passed to them (that I call "delta") that is a Number representing the amount of time that has passed since the last draw frame.
+`draw(delta)`, `preDraw(delta)`, and `postDraw(delta)` take an argument that is a Number representing the amount of time that has passed since the last draw frame.
 
 ### Wave.World
 Wave.World is an extension of Wave.IterDraw that handles all of the annoying animation event loop logic.
@@ -125,7 +125,7 @@ Other Useful Properties:
 
 ## The Basics
 
-Essentially, Draw Objects are just objects with a `draw()` method on them.  When writing a Draw Object, there are some safe assumptions that you can make.  Draw Objects that are in a world will always have a reference to world stored as `this.world`, so you can use the context from that world to actually implement a draw method.  You can also assume that your `draw()` method takes one argument, which is a number for the amount of time that has passed since the last draw frame.
+Essentially, Draw Objects are just objects with a `draw(delta)` method on them.  When writing a Draw Object, there are some safe assumptions that you can make.  Draw Objects that are in a world will always have a reference to world stored as `this.world`, so you can use the context from that world to actually implement a draw method.  You can also assume that your `draw(delta)` method takes one argument, which is a Number representing the amount of time that has passed since the last draw frame.
 
 ## Here's an Example
 
