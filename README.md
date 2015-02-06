@@ -38,10 +38,10 @@ Let's break this down piece by piece.
 
 1. We're requiring Wave.  Wave is basically just a wrapper class for all of the other objects in this library that I've written so far.
 2. We get the canvas element and store a reference to it.
-3. We make a world object.  This is done by calling the Wave.World() function, which returns a world object.  Any properties from any objects that get passed to Wave.World get written onto the returned object, so all of the stuff on the object that we pass in ends up on the returned world object.  Let's look at what we passed in.
-    * canvas: a reference to the canvas element that this world is drawn on
-    * width/height: the width and height of our desired world
-    * objects: an array of objects that we want to draw on our world.  These objects all need to have `draw()` methods.  In this case I've passed a simple square object into the world, which you can read more about later in the readme.
+3. We make a world object.  This is done by calling the `Wave.World()` function, which returns a world object.  Any properties from any objects that get passed to `Wave.World()` get written onto the returned object, so all of the stuff on the object that we pass in ends up on the returned world object.  Let's look at what we passed in.
+    - **canvas**: a reference to the canvas element that this world is drawn on
+    - **width/height**: the width and height of our desired world
+    - **objects**: an array of objects that we want to draw on our world.  These objects all need to have `draw()` methods.  In this case I've passed a simple square object into the world.
 4. We call `world.start()`, which starts the event loop for the world.  Now let's look at how this stuff works.
 
 # How it all works
@@ -61,14 +61,12 @@ This is a function that takes in as many objects as you like, and returns an obj
 
 The returned object also has a function called `callIf(fn)`, which takes a reference to a potential function, and if it exists, calls that function from the context of this object.
 
-**NOTE: From here on when I refer to any object of the form Wave.Object, I'm actually referring to the object returned by the `Wave.Object()` function.  The only exception to this is Wave.Static, which still refers to the actual object `Wave.Static`.**
-
 ### Inheritance Pattern
 The pattern that I have been using is essentially this:
 - All "classes" are actually just functions that return the desired object.
-- All class functions accept any number of objects are arguments, and compile the properties of those input objects onto the returned object.
+- All class functions accept any number of objects as arguments, and compile the properties of those input objects onto the returned object.
 
-Here's a super simple example of this:
+Here's a barebones example of this:
 ```javascript
 define(['js/Static', 'js/Base'], function(Static, Base) {
 
@@ -92,34 +90,31 @@ define(['js/Static', 'js/Base'], function(Static, Base) {
 ```
 
 ## Groups, IterDraw, and the World
-Now I want to get to how Wave.World functions, but before that I'll describe the functionality of Wave.IterDraw and Wave.Group, from which Wave.World is extended.
+Before I explain how to use Wave.World, I'll describe the functionality of Wave.IterDraw and Wave.Group, from which Wave.World is extended.
 
 ### Wave.Group
-A Wave.Group object is simply an object that has the property `objects`, that stores an array of sub-objects or child objects.  It also has an `updateWorld()` function and an `addObjects()` function.
-
-`updateWorld()` updates the world of each of its child objects, and calls any `updateWorld()` functions that those child objects might have.
-`addObjects([obj1, obj2, ...])` takes an array of objects and adds them to this Groups `objects` array.  One the child objects have been added, it calls `updateWorld()` on the Group.
+A Wave.Group object is simply an object that expects to have the property `objects`, which stores an array of sub-objects or child objects.  It also has an `updateWorld()` function and an `addObjects()` function.
+- `updateWorld()` updates the world of each of its child objects, and calls any `updateWorld()` functions that those child objects might have.
+- `addObjects([obj1, obj2, ...])` takes an array of objects and adds them to this groups `objects` array.  Once the child objects have been added, it calls `updateWorld()`.
 
 ### Wave.IterDraw
 Wave.IterDraw is an extension of Wave.Group that has a `draw()` function.
-
-`draw(delta)` looks for and calls any `draw()` functions that exist on any of the child objects on this IterDraw.  It will also call any `preDraw()` function it has before it draws its child objects, and any `postDraw()` functions it has after it draws its child objects.
-
-`draw(delta)`, `preDraw(delta)`, and `postDraw(delta)` take an argument that is a Number representing the amount of time that has passed since the last draw frame.
+- `draw(delta)` looks for and calls any `draw()` functions that exist on any of the child objects on this IterDraw.  It will also call any `preDraw()` function it has before it draws its child objects, and any `postDraw()` functions it has after it draws its child objects.
+- `draw(delta)`, `preDraw(delta)`, and `postDraw(delta)` take an argument that is a Number representing the amount of time that has passed since the last draw frame.
 
 ### Wave.World
 Wave.World is an extension of Wave.IterDraw that handles all of the annoying animation event loop logic.
 
 Required Properties:
-    - canvas: a reference to a canvas element on the page
-    - width: the width that you want this world to be
-    - height: the height that you want this world to be
+- **canvas**: a reference to a canvas element on the page
+- **width**: the width that you want this world to be
+- **height**: the height that you want this world to be
 
 Other Useful Properties:
-    - context: the context for the canvas element that was passed into the world
-    - start(): starts this world's animation
-    - playPause(): toggles this world between playing and pausing
-    - addObjects(): adds objects to the world (after initialization), the same as the addObjects that all Wave.Group objects have
+- **context**: the context for the canvas element that was passed into the world
+- **start()**: starts this world's animation
+- **playPause()**: toggles this world between playing and pausing
+- **addObjects()**: adds objects to the world (after initialization), the same as the addObjects that all Wave.Group objects have
 
 # Writing Actual Draw Objects
 
