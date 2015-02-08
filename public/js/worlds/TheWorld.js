@@ -3,20 +3,23 @@ require([
     'js/worlds/LineStarWorld',
     'js/worlds/LineStarWorld2',
     'js/worlds/StripeWorld',
-    'js/worlds/StarsAndStripes'
+    'js/worlds/StarsAndStripes',
+    'js/worlds/CircleStripeWorld'
 ], function(
     Wave,
     LineStarWorld,
     LineStarWorld2,
     StripeWorld,
-    StarsAndStripes
+    StarsAndStripes,
+    CircleStripeWorld
 ) {
 
     // Get the canvas
     var canvas = document.getElementById('canvas');
 
     // All of the possible world states
-    var world_states = [
+    var sub_worlds = [
+        CircleStripeWorld,
         LineStarWorld,
         LineStarWorld2,
         StripeWorld,
@@ -26,8 +29,8 @@ require([
     /**
      * Hooking up states to world
      */
-    var state = Wave.State({
-        objects: world_states
+    var sequence = Wave.Sequence({
+        objects: sub_worlds
     });
 
     var world = Wave.World({
@@ -38,32 +41,25 @@ require([
             Wave.Square({
                 color: 'black',
                 start: [0,0],
-                end: [1600,900]
+                end: [1600,900],
+                fill: true
             }),
-            state
+            sequence
         ]
     });
 
-    window.addEventListener('keydown', function(e) {
-        if (e.defaultPrevented) {
-            return;
-        }
-
-        switch (e.keyCode) {
-            case 78: // Space
-                state.advance();
-                e.preventDefault();
-                break;
-            case 32: // Space
+    var key_handler = Wave.KeyHandler({
+        keys: {
+            // N
+            78: function() {
+                sequence.advance();
+            },
+            // Space
+            32: function() {
                 world.playPause();
-                e.preventDefault();
-                break;
-            default:
-                console.log(e.keyCode);
-                break;
+            }
         }
-
-    }, false);
+    });
 
     world.start();
 

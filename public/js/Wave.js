@@ -7,7 +7,11 @@ define([
     'js/Stripes',
     'js/IterDraw',
     'js/Square',
-    'js/State'
+    'js/Circle',
+    'js/CircleStripes',
+    'js/State',
+    'js/KeyHandler',
+    'js/SoundData'
 ], function(
     Base,
     World,
@@ -17,7 +21,11 @@ define([
     Stripes,
     IterDraw,
     Square,
-    State
+    Circle,
+    CircleStripes,
+    Sequence,
+    KeyHandler,
+    SoundData
 ) {
     return {
         Static: Static,
@@ -28,6 +36,10 @@ define([
         Square: Square,
         LineStar: LineStar,
         Stripes: Stripes,
-        State: State
+        Circle: Circle,
+        CircleStripes: CircleStripes,
+        Sequence: Sequence,
+        KeyHandler: KeyHandler,
+        SoundData: SoundData
     };
 });

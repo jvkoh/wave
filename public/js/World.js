@@ -39,21 +39,25 @@ define(['js/Static', 'js/IterDraw'], function(Static, IterDraw) {
 
                 // Set the new time and do it again
                 this.time = this.time + this.delta;
-                if (!this.stop) {
+                if (this.keep_animating) {
                     window.requestAFrame(this.animate.bind(this));
                 }
             },
 
-            playPause: function stop() {
-                this.stop = !this.stop;
-                if (!this.stop) {
+            playPause: function playPause() {
+                this.keep_animating = !this.keep_animating;
+                if (this.keep_animating) {
                     this.animate();
                 }
             },
 
             start: function start() {
-                this.stop = false;
+                this.keep_animating = true;
                 this.animate();
+            },
+
+            stop: function stop() {
+                this.keep_animating = false;
             }
         }, Static.compile(arguments));
     };

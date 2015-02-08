@@ -1,11 +1,13 @@
-define(['js/Static', 'js/Base'], function(Static, Base) {
+define(['js/Static', 'js/DrawBase'], function(Static, DrawBase) {
     return function Line() {
-        return Base({
-            draw: function draw() {
+        return DrawBase({
+            init: function init() {
+                this.fill = false;
+            },
+
+            drawShape: function drawShape() {
                 var context = this.world.context;
                 context.beginPath();
-                context.lineWidth = this.thickness.toString();
-                context.strokeStyle = this.color;
                 context.moveTo(this.start[0], this.start[1]);
                 context.lineTo(this.end[0], this.end[1]);
                 context.stroke();

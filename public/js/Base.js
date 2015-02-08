@@ -10,6 +10,11 @@ define(['js/Static'], function(Static) {
         }, arguments);
 
         base.callIf(base.init);
+
+        if (base.defaults) {
+            Static.extend.apply(base, base.defaults);
+        }
+
         return base;
     };
 });

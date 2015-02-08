@@ -1,13 +1,19 @@
-define(['js/Static', 'js/Base'], function(Static, Base) {
+define(['js/Static', 'js/DrawBase'], function(Static, DrawBase) {
     return function Square() {
-        return Base({
-            draw: function draw() {
-                var context = this.world.context;
-                context.fillStyle = this.color;
-                context.fillRect(
-                    this.start[0], this.start[1],
-                    this.end[0], this.end[1]
-                );
+        return DrawBase({
+            drawShape: function drawShape() {
+                if (this.fill) {
+                    this.world.context.fillRect(
+                        this.start[0], this.start[1],
+                        this.end[0], this.end[1]
+                    );
+
+                } else {
+                    this.world.context.strokeRect(
+                        this.start[0], this.start[1],
+                        this.end[0], this.end[1]
+                    );
+                }
             }
         }, Static.compile(arguments));
     };
