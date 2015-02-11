@@ -11,7 +11,7 @@ require([
         sample_size: 1024
     });
 
-    var STRIPE_THICKNESS = 24,
+    var STRIPE_THICKNESS = 25,
         STRIPE_SPEED = .02,
         STRIPE_COUNT = 60,
         STRIPE_WIDTH = 2000,
@@ -23,39 +23,20 @@ require([
         height: 900,
         freq_data: sound_data.freq_data,
         objects: [
+            Wave.Square({
+                fill: true,
+                color: 'black',
+                start: [0,0],
+                end: [1600,900]
+            }),
             ResponsiveCircleGrid({
                 start: [100,100],
                 end: [1500,800],
                 thickness: 10,
                 scale: 0.5,
-                fill: true,
-                colorsets: [
-                    ['red', 'blue', 'green'],
-                    ['red', 'orange', 'yellow'],
-                    ['purple', 'magenta', 'pink'],
-                    ['black', 'blue', 'purple']
-                ],
-                threshold: 38,
+                color: 'white',
                 rows: 9,
                 cols: 16
-            }),
-            Wave.Stripes({
-                center: [800,450],
-                length: STRIPE_LENGTH,
-                thickness: STRIPE_THICKNESS,
-                speed: - 3/5 * STRIPE_SPEED,
-                color: 'white',
-                num_stripes: STRIPE_COUNT,
-                width: STRIPE_WIDTH
-            }),
-            Wave.Stripes({
-                center: [800,450],
-                length: STRIPE_LENGTH,
-                thickness: STRIPE_THICKNESS,
-                speed: 4/13 * STRIPE_SPEED,
-                color: 'white',
-                num_stripes: STRIPE_COUNT,
-                width: STRIPE_WIDTH
             })
         ]
     });

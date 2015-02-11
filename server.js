@@ -35,6 +35,14 @@ app.get('/visualizer', function(req, res) {
     render(res, 'visualizer.html');
 });
 
+app.get('/circles-mic', function(req, res) {
+    render(res, 'circles-mic.html');
+});
+
+app.get('/circles', function(req, res) {
+    render(res, 'circles.html');
+});
+
 app.get('/', function(req, res) {
     render(res, 'index.html');
 });

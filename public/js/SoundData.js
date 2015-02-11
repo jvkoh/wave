@@ -26,7 +26,7 @@ define(['js/Static', 'js/Base'], function(Static, Base) {
                 this.js_node = this.acontext.createScriptProcessor(this.sample_size, 2, 2);
                 this.js_node.onaudioprocess = this.processAudio.bind(this);
 
-                this.data = new Uint8Array(this.analyser.frequencyBinCount);
+                this.freq_data = new Uint8Array(this.analyser.frequencyBinCount);
                 this.file_input_el = document.querySelector('#sound-file');
 
                 if (this.mic) {
@@ -35,9 +35,8 @@ define(['js/Static', 'js/Base'], function(Static, Base) {
                         this.setInputStream.bind(this),
                         this.logError);
 
-                    this.input_stream.connect(this.analyser);
-                    this.analyser.connect(this.js_node);
-                    this.js_node.connect(this.acontext.destination);
+                    this.connectMicStream();
+
                 } else {
                     this.file_input_el.addEventListener('change', this.initSoundFile.bind(this));
                 }
@@ -54,7 +53,7 @@ define(['js/Static', 'js/Base'], function(Static, Base) {
 
             processAudio: function processAudio(ape) {
                 var input, output;
-                this.analyser.getByteFrequencyData(this.data);
+                this.analyser.getByteFrequencyData(this.freq_data);
 
                 // Don't pass audio through if this is a mic input
                 if (this.mic) {
@@ -114,9 +113,21 @@ define(['js/Static', 'js/Base'], function(Static, Base) {
                 this.js_node.connect(this.acontext.destination);
             },
 
+            connectMicStream: function connectMicStream() {
+                if (!this.input_stream) {
+                    setTimeout(this.connectMicStream.bind(this), 10);
+                    return;
+                }
+
+                this.input_stream.connect(this.analyser);
+                this.analyser.connect(this.js_node);
+                this.js_node.connect(this.acontext.destination);
+            },
+
             playSound: function playSound() {
                 if (!this.source) {
                     setTimeout(this.playSound.bind(this), 10);
+                    return;
                 }
 
                 this.source.start();

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+    <head>
+        <title>Circles Visualizer</title>
+
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+        <meta name="viewport" content="initial-scale=1.0 maximum-scale=1.0 minimum-scale=1.0 user-scalable=no">
+
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .fullscreen {
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <input type="file" accept="audio/*" id="sound-file" style="display:none;">
+        <canvas id="canvas" class="fullscreen"></canvas>
+        <script src="/js/lib/require.js"></script>
+        <script src="/js/SimpleCircleVisualizer.js"></script>
+    </body>
+
+</html>

@@ -9,7 +9,6 @@ define(['js/Static', 'js/Base'], function(Static, Base) {
 
                 if (this.keys[e.keyCode]) {
                     this.keys[e.keyCode].call(this, e);
-                    e.preventDefault();
                 } else {
                     console.log(e.keyCode);
                 }
