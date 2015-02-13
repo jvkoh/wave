@@ -22,7 +22,23 @@ define(['js/Static', 'js/IterDraw', 'js/Circle'], function(Static, IterDraw, Cir
                 var x_inc = (this.end[0] - this.start[0]) / (this.cols - 1),
                     y_inc = (this.end[1] - this.start[1]) / (this.rows - 1);
 
-                for (var y = (this.rows - 1); y >= 0; y--) {
+                var y, increment, y_end;
+
+                if (this.flip_y) {
+                    y = (this.rows - 1);
+                    increment = -1;
+                    y_end = function(cur_y) {
+                        return (cur_y >= 0);
+                    };
+                } else {
+                    y = 0;
+                    increment = 1;
+                    y_end = function(cur_y) {
+                        return (cur_y < this.rows);
+                    };
+                }
+
+                while (y_end.call(this, y)) {
                     for (var x = 0; x < this.cols; x++) {
                         this.objects.push(Circle({
                             fill: this.fill,
@@ -33,6 +49,7 @@ define(['js/Static', 'js/IterDraw', 'js/Circle'], function(Static, IterDraw, Cir
                             ]
                         }));
                     }
+                    y += increment;
                 }
 
                 // Force updating of circle colors
@@ -75,7 +92,6 @@ define(['js/Static', 'js/IterDraw', 'js/Circle'], function(Static, IterDraw, Cir
 
                 this.objects.forEach(function(circle, i) {
                     circle.color = colorset[i % colorset.length];
-                    console.log(circle.color);
                 });
             },
 
@@ -102,7 +118,6 @@ define(['js/Static', 'js/IterDraw', 'js/Circle'], function(Static, IterDraw, Cir
                     return;
                 }
 
-                console.log('updating');
                 if (this.shouldUpdateColors(delta)) {
                     this.updateColors();
                     this.color_lock = this.color_timeout;

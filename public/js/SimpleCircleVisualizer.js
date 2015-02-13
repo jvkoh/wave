@@ -30,12 +30,22 @@ require([
                 end: [1600,900]
             }),
             ResponsiveCircleGrid({
+                flip_y: true,
                 start: [100,100],
+                end: [1500,400],
+                thickness: 10,
+                scale: 0.3,
+                color: 'white',
+                rows: 5,
+                cols: 16
+            }),
+            ResponsiveCircleGrid({
+                start: [100,500],
                 end: [1500,800],
                 thickness: 10,
-                scale: 0.5,
+                scale: 0.3,
                 color: 'white',
-                rows: 9,
+                rows: 5,
                 cols: 16
             })
         ]
