@@ -4,14 +4,20 @@ require([
     'js/worlds/LineStarWorld2',
     'js/worlds/StripeWorld',
     'js/worlds/StarsAndStripes',
-    'js/worlds/CircleStripeWorld'
+    'js/worlds/CircleStripeWorld',
+    'js/worlds/TriangleWorld',
+    'js/worlds/HexagonWorld',
+    'js/worlds/RotatingTriangleWorld'
 ], function(
     Wave,
     LineStarWorld,
     LineStarWorld2,
     StripeWorld,
     StarsAndStripes,
-    CircleStripeWorld
+    CircleStripeWorld,
+    TriangleWorld,
+    HexagonWorld,
+    RotatingTriangleWorld
 ) {
 
     // Get the canvas
@@ -23,7 +29,10 @@ require([
         LineStarWorld,
         LineStarWorld2,
         StripeWorld,
-        StarsAndStripes
+        StarsAndStripes,
+        HexagonWorld,
+        TriangleWorld,
+        RotatingTriangleWorld
     ];
 
     /**
