@@ -46,4 +46,3 @@ app.get('/circles', function(req, res) {
 app.get('/', function(req, res) {
     render(res, 'index.html');
 });
-
