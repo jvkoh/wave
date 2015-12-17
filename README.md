@@ -16,12 +16,12 @@ require([
 ) {
 
     var canvas = document.getElementById('canvas');
-    var world = Wave.World({
+    var world = new Wave.World({
         canvas: canvas,
         width: 1600,
         height: 900,
         objects: [
-            Wave.Square({
+            new Wave.Square({
                 color: 'black',
                 start: [0,0],
                 end: [1600,900]
@@ -36,9 +36,9 @@ require([
 
 Let's break this down piece by piece.
 
-1. We're requiring Wave.  Wave is basically just a wrapper class for all of the other objects in this library that I've written so far.
+1. We're requiring Wave.  Wave is basically just a wrapper class for all of the base objects in this library.
 2. We get the canvas element and store a reference to it.
-3. We make a world object.  This is done by calling the `Wave.World()` function, which returns a world object.  Any properties from any objects that get passed to `Wave.World()` get written onto the returned object, so all of the stuff on the object that we pass in ends up on the returned world object.  Let's look at what we passed in.
+3. We make a world object.  This is done by calling `new Wave.World()`, which returns a world object.  Properties from any objects that we pass to the constructor get written onto the returned object.  Let's look at what we passed in.
     - **canvas**: a reference to the canvas element that this world is drawn on
     - **width/height**: the width and height of our desired world
     - **objects**: an array of objects that we want to draw on our world.  These objects all need to have `draw()` methods.  In this case I've passed a simple square object into the world.
@@ -47,47 +47,32 @@ Let's break this down piece by piece.
 # How it all works
 
 ## Object Inheritance
-I've written my own little strange version of object inheritance, but it's pretty lightweight and hopefully easy to understand.  It consists of two classes: Wave.Base and Wave.Static.
+The object inheritance here is pretty lightweight and hopefully easy to understand.  All of the logic for it lives in Wave.Extendable.
 
-### Wave.Static
-This object has two very simple functions, `extend()` and `compile`.
-
-`Static.extend(obj1, obj2, obj3, ...)` this function is intended to be called from the context of an object that you wish to extend.  It takes all of the properties from all of the objects passed into it, and adds them to the context object.
-
-`Static.compile([obj1, obj2, ...])` this function takes an array of objects, and returns one object that has all of the properties of all of the objects in the array.
-
-### Wave.Base
-This is a function that takes in as many objects as you like, and returns an object.  The object returned has all the properties of all the objects passed into the function, and if the object has an `init()` function defined on it, that function will be called from the namespace of the returned object.
-
-The returned object also has a function called `callIf(fn)`, which takes a reference to a potential function, and if it exists, calls that function from the context of this object.
-
-### Inheritance Pattern
-The pattern that I have been using is essentially this:
-- All "classes" are actually just functions that return the desired object.
-- All class functions accept any number of objects as arguments, and compile the properties of those input objects onto the returned object.
+### Wave.Extendable
+This object has an `extendClass()` function.  `extendClass()` returns a clone of the current object with the properties of any input objects on its prototype.  This makes extending a class as simple as one function call.
 
 Here's a barebones example of this:
 ```javascript
-define(['js/Static', 'js/Base'], function(Static, Base) {
+define(['js/Extendable'], function(Extendable) {
 
-    // ultimately you want to return a function that builds your class objects
-    return function NewObject() {
+    /**
+     * If you want to inherit an class, just call extendClass
+     */
+    return Extendable.extendClass({
 
         /**
-         * If you want to inherit an object, just call that object's class function
-         * and add to it!  In this case I'm just inheriting Base
+         * Here's where all of the properties that this object should have go
          */
-        return Base({
 
-            /**
-             * Here's where all of the properties that this object should have go
-             */
+    });
 
-        // Make sure you take all of the arguments into your function and compile them onto your object
-        }, Static.compile(arguments));
-    };
 });
 ```
+
+The extendable object also gives you a couple prototype functions for free.
+- `callIf(func)` Calls the input function if it exists.
+- `extend()` Adds all the properties of all the input objects to the context object.
 
 ## Groups, IterDraw, and the World
 Before I explain how to use Wave.World, I'll describe the functionality of Wave.IterDraw and Wave.Group, from which Wave.World is extended.
@@ -125,27 +110,24 @@ Essentially, Draw Objects are just objects with a `draw(delta)` method on them. 
 ## Here's an Example
 
 ```javascript
-define(['js/Static', 'js/Base'], function(Static, Base) {
-    return function Line() {
+define(['js/Extendable'], function(Extendable) {
+    // Extending the base class
+    return Extendable.extendClass({
 
-        // Extending the base class
-        return Base({
+        // This thing doesn't change over time, so I didn't include the delta argument
+        draw: function draw() {
 
-            // This thing doesn't change over time, so I didn't include the delta argument
-            draw: function draw() {
+            // Get the context of this world
+            var context = this.world.context;
 
-                // Get the context of this world
-                var context = this.world.context;
-
-                // Use some properties that we expect to exist to draw a line!
-                context.beginPath();
-                context.lineWidth = this.thickness.toString();
-                context.strokeStyle = this.color;
-                context.moveTo(this.start[0], this.start[1]);
-                context.lineTo(this.end[0], this.end[1]);
-                context.stroke();
-            }
-        }, Static.compile(arguments));
-    };
+            // Use some properties that we expect to exist to draw a line!
+            context.beginPath();
+            context.lineWidth = this.thickness.toString();
+            context.strokeStyle = this.color;
+            context.moveTo(this.start[0], this.start[1]);
+            context.lineTo(this.end[0], this.end[1]);
+            context.stroke();
+        }
+    });
 });
 ```

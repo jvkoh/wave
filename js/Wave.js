@@ -1,5 +1,6 @@
 define([
     'js/World',
+    'js/Extendable',
     'js/Line',
     'js/LineStar',
     'js/Stripes',
@@ -15,6 +16,7 @@ define([
     'js/SoundData'
 ], function(
     World,
+    Extendable,
     Line,
     LineStar,
     Stripes,
@@ -31,6 +33,7 @@ define([
 ) {
     return {
         World: World,
+        Extendable: Extendable,
         IterDraw: IterDraw,
         Line: Line,
         Square: Square,
