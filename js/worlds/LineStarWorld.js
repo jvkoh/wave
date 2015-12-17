@@ -5,9 +5,9 @@ define(['js/Wave'], function(Wave) {
         STAR_SPEED = -0.06,
         STAR_POINTS = 22;
 
-    return Wave.IterDraw({
+    return new Wave.IterDraw({
         objects:[
-            Wave.LineStar({
+            new Wave.LineStar({
                 center: [-100,0],
                 radius: STAR_RADIUS,
                 thickness: STAR_THICKNESS,
@@ -15,7 +15,7 @@ define(['js/Wave'], function(Wave) {
                 color: 'red',
                 points: STAR_POINTS
             }),
-            Wave.LineStar({
+            new Wave.LineStar({
                 center: [-100,900],
                 radius: STAR_RADIUS,
                 thickness: STAR_THICKNESS,
@@ -23,7 +23,7 @@ define(['js/Wave'], function(Wave) {
                 color: 'orange',
                 points: STAR_POINTS
             }),
-            Wave.LineStar({
+            new Wave.LineStar({
                 center: [-100,450],
                 radius: STAR_RADIUS,
                 thickness: STAR_THICKNESS,
@@ -31,7 +31,7 @@ define(['js/Wave'], function(Wave) {
                 color: 'yellow',
                 points: STAR_POINTS
             }),
-            Wave.LineStar({
+            new Wave.LineStar({
                 center: [1700,0],
                 radius: STAR_RADIUS,
                 thickness: STAR_THICKNESS,
@@ -39,7 +39,7 @@ define(['js/Wave'], function(Wave) {
                 color: 'orange',
                 points: STAR_POINTS
             }),
-            Wave.LineStar({
+            new Wave.LineStar({
                 center: [1700,900],
                 radius: STAR_RADIUS,
                 thickness: STAR_THICKNESS,
@@ -47,7 +47,7 @@ define(['js/Wave'], function(Wave) {
                 color: 'red',
                 points: STAR_POINTS
             }),
-            Wave.LineStar({
+            new Wave.LineStar({
                 center: [1700,450],
                 radius: STAR_RADIUS,
                 thickness: STAR_THICKNESS,

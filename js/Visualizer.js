@@ -7,7 +7,7 @@ require([
 ) {
 
     var canvas = document.getElementById('canvas');
-    var sound_data = Wave.SoundData({
+    var sound_data = new Wave.SoundData({
         sample_size: 1024
     });
 
@@ -17,13 +17,13 @@ require([
         STRIPE_WIDTH = 2000,
         STRIPE_LENGTH = 2000;
 
-    var world = Wave.World({
+    var world = new Wave.World({
         canvas: canvas,
         width: 1600,
         height: 900,
         freq_data: sound_data.freq_data,
         objects: [
-            ResponsiveCircleGrid({
+            new ResponsiveCircleGrid({
                 flip_y: true,
                 start: [100,100],
                 end: [1500,800],
@@ -40,7 +40,7 @@ require([
                 rows: 9,
                 cols: 16
             }),
-            Wave.Stripes({
+            new Wave.Stripes({
                 center: [800,450],
                 length: STRIPE_LENGTH,
                 thickness: STRIPE_THICKNESS,
@@ -49,7 +49,7 @@ require([
                 num_stripes: STRIPE_COUNT,
                 width: STRIPE_WIDTH
             }),
-            Wave.Stripes({
+            new Wave.Stripes({
                 center: [800,450],
                 length: STRIPE_LENGTH,
                 thickness: STRIPE_THICKNESS,
@@ -61,7 +61,7 @@ require([
         ]
     });
 
-    var key_handler = Wave.KeyHandler({
+    var key_handler = new Wave.KeyHandler({
         keys: {
             // F
             70: function() {

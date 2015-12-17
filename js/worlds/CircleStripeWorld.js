@@ -1,4 +1,4 @@
-define(['js/Wave', 'js/Circle'], function(Wave, Circle) {
+define(['js/Wave'], function(Wave) {
 
     var STRIPE_THICKNESS = 15,
         STRIPE_SPEED = .07,
@@ -6,18 +6,18 @@ define(['js/Wave', 'js/Circle'], function(Wave, Circle) {
         STRIPE_WIDTH = 2000,
         STRIPE_LENGTH = 2000;
 
-    return Wave.IterDraw({
+    return new Wave.IterDraw({
         objects:[
-            Wave.ExpandingShapes({
+            new Wave.ExpandingShapes({
                 center: [800,450],
                 width: 1000,
                 thickness: STRIPE_THICKNESS,
                 speed: STRIPE_SPEED,
                 color: 'white',
                 num_shapes: 20,
-                shapeCreator: Circle
+                shapeCreator: Wave.Circle
             }),
-            Wave.Stripes({
+            new Wave.Stripes({
                 center: [800,450],
                 length: STRIPE_LENGTH,
                 thickness: STRIPE_THICKNESS,
@@ -26,7 +26,7 @@ define(['js/Wave', 'js/Circle'], function(Wave, Circle) {
                 num_stripes: STRIPE_COUNT,
                 width: STRIPE_WIDTH
             }),
-            Wave.Stripes({
+            new Wave.Stripes({
                 center: [800,450],
                 length: STRIPE_LENGTH,
                 thickness: STRIPE_THICKNESS,

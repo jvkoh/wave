@@ -1,7 +1,5 @@
 define([
-    'js/Base',
     'js/World',
-    'js/Static',
     'js/Line',
     'js/LineStar',
     'js/Stripes',
@@ -16,9 +14,7 @@ define([
     'js/KeyHandler',
     'js/SoundData'
 ], function(
-    Base,
     World,
-    Static,
     Line,
     LineStar,
     Stripes,
@@ -34,8 +30,6 @@ define([
     SoundData
 ) {
     return {
-        Static: Static,
-        Base: Base,
         World: World,
         IterDraw: IterDraw,
         Line: Line,

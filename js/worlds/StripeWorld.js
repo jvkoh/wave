@@ -6,9 +6,9 @@ define(['js/Wave'], function(Wave) {
         STRIPE_WIDTH = 2000,
         STRIPE_LENGTH = 2000;
 
-    return Wave.IterDraw({
+    return new Wave.IterDraw({
         objects:[
-            Wave.Stripes({
+            new Wave.Stripes({
                 center: [800,450],
                 length: STRIPE_LENGTH,
                 thickness: STRIPE_THICKNESS,
@@ -17,7 +17,7 @@ define(['js/Wave'], function(Wave) {
                 num_stripes: STRIPE_COUNT,
                 width: STRIPE_WIDTH
             }),
-            Wave.Stripes({
+            new Wave.Stripes({
                 center: [800,450],
                 length: STRIPE_LENGTH,
                 thickness: STRIPE_THICKNESS,

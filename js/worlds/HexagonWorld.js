@@ -5,9 +5,9 @@ define(['js/Wave', 'js/HexagonTiles'], function(Wave, HexagonTiles) {
         STRIPE_WIDTH = 2000,
         STRIPE_LENGTH = 2000;
 
-    return Wave.IterDraw({
+    return new Wave.IterDraw({
         objects: [
-            HexagonTiles({
+            new HexagonTiles({
                     thickness: 2,
                     color: 'white',
                     radius: 60,
